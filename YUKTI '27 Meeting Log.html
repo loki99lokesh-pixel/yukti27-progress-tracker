@@ -1,0 +1,444 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>YUKTI '27 Meeting Log</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: single reading column, sticky section nav; log -> themes -> ranked priorities. Palette from the YUKTI ticket (deep purple + gold). */
+:root{
+  --bg:#f6f4fa; --surface:#ffffff; --fg:#1d1629; --muted:#6a607a; --line:#e2dcec;
+  --purple:#4b2a7b; --purple-soft:#ece6f6; --gold:#9a6a00; --gold-soft:#fbf0d2;
+  --now:#b3261e; --now-soft:#fbe4e1; --week:#9a6a00; --week-soft:#fbf0d2; --soon:#3d5a80; --soon-soft:#e3ebf5;
+  --f-display:'Bricolage Grotesque','Segoe UI',system-ui,sans-serif;
+  --f-body:'IBM Plex Sans','Segoe UI',system-ui,sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#150f1f; --surface:#1f1730; --fg:#efe9f8; --muted:#a99dbd; --line:#34284b;
+  --purple:#c4a8f0; --purple-soft:#2c2045; --gold:#e8b84a; --gold-soft:#3a2d10;
+  --now:#ff8a80; --now-soft:#40191a; --week:#e8b84a; --week-soft:#3a2d10; --soon:#8fb4e3; --soon-soft:#1b2a40; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#150f1f; --surface:#1f1730; --fg:#efe9f8; --muted:#a99dbd; --line:#34284b;
+  --purple:#c4a8f0; --purple-soft:#2c2045; --gold:#e8b84a; --gold-soft:#3a2d10;
+  --now:#ff8a80; --now-soft:#40191a; --week:#e8b84a; --week-soft:#3a2d10; --soon:#8fb4e3; --soon-soft:#1b2a40; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.55}
+.wrap{max-width:880px;margin:0 auto;padding-inline:16px;padding-block:28px 64px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:clamp(2rem,6vw,2.8rem);letter-spacing:-.02em}
+h2{font-size:1.6rem;letter-spacing:-.01em}
+h3{font-size:1.1rem}
+.eyebrow{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+header{display:flex;flex-direction:column;gap:10px;padding-bottom:20px;border-bottom:3px solid var(--gold)}
+header p{margin:0;color:var(--muted);max-width:62ch}
+.facts{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:.85rem;color:var(--muted);padding-top:6px}
+.facts b{color:var(--fg);font-weight:600}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;gap:6px;flex-wrap:wrap;padding-block:10px;border-bottom:1px solid var(--line)}
+nav a{font-size:.85rem;font-weight:500;color:var(--purple);text-decoration:none;padding:5px 12px;border-radius:999px;background:var(--purple-soft)}
+nav a:focus-visible,nav a:hover{outline:2px solid var(--gold);outline-offset:1px}
+section{display:flex;flex-direction:column;gap:18px;padding-top:40px}
+.lede{margin:0;color:var(--muted);max-width:64ch}
+.meeting{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 18px 8px;display:flex;flex-direction:column;gap:12px}
+.mhead{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;justify-content:space-between}
+.date{font-family:var(--f-mono);font-size:.8rem;color:var(--purple);background:var(--purple-soft);padding:3px 9px;border-radius:5px;white-space:nowrap}
+.note{font-size:.82rem;color:var(--muted);margin:0}
+.note.flag{color:var(--gold)}
+.meeting h4,.theme h4{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:6px 0 0;font-weight:500}
+ul{margin:0;padding-left:1.15rem;display:flex;flex-direction:column;gap:5px}
+li::marker{color:var(--gold)}
+.meeting ul{padding-bottom:10px}
+.theme{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:10px}
+.theme ul{list-style:none;padding:0;gap:8px}
+.theme li{display:flex;gap:10px;align-items:baseline}
+.theme li span.t{min-width:0}
+.tag{flex:none;font-family:var(--f-mono);font-size:.66rem;color:var(--purple);background:var(--purple-soft);border-radius:4px;padding:1px 6px;white-space:nowrap;width:3.6rem;text-align:center}
+.flip{display:flex;gap:10px;padding:10px 12px;border-radius:8px;background:var(--gold-soft);font-size:.88rem}
+.flip b{font-weight:600}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:.88rem}
+th,td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--line)}
+th{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500}
+tr:last-child td{border-bottom:0}
+ol.rank{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px;counter-reset:r}
+.item{counter-increment:r;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px 16px 62px;position:relative;display:flex;flex-direction:column;gap:8px}
+.item::before{content:counter(r);position:absolute;left:16px;top:12px;font-family:var(--f-display);font-weight:700;font-size:1.9rem;color:var(--purple);width:32px;text-align:center}
+.item header{border:0;padding:0;gap:6px;flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.pill{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.05em;text-transform:uppercase;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.p-now{background:var(--now-soft);color:var(--now)}
+.p-week{background:var(--week-soft);color:var(--week)}
+.p-soon{background:var(--soon-soft);color:var(--soon)}
+.item p{margin:0}
+.item .k{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.item .q{border-left:3px solid var(--gold);padding-left:10px}
+.sup .t{text-decoration:line-through;text-decoration-color:var(--muted);color:var(--muted)}
+.sup .t em{font-style:normal;text-decoration:none;display:inline-block;font-family:var(--f-mono);font-size:.66rem;letter-spacing:.04em;text-transform:uppercase;color:var(--gold);background:var(--gold-soft);border-radius:4px;padding:1px 6px;margin-left:6px}
+.open{display:flex;flex-direction:column;gap:6px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 18px}
+.meta{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:.8rem;color:var(--muted)}
+@media (max-width:480px){.item{padding-left:48px}.item::before{left:10px;font-size:1.6rem;width:28px}.tag{width:3.2rem}}
+</style>
+
+<div class="wrap">
+<header>
+  <span class="eyebrow">Thiagarajar School of Management</span>
+  <h1>YUKTI '27 Meeting Log</h1>
+  <p>Minutes from the four planning meetings held so far, merged into one record, followed by the points grouped by topic and a ranked list of what needs a decision next.</p>
+  <div class="facts"><span><b>Fest dates</b> 28–30 Jan 2027 (frozen)</span><span><b>Meetings logged</b> 4, from 25 Sep to 7 Oct 2026</span><span><b>Prepared</b> 7 Oct 2026</span></div>
+</header>
+
+<nav aria-label="Sections">
+  <a href="#log">1 · Meeting log</a><a href="#themes">2 · Points by topic</a><a href="#gaps">Conflicts resolved</a><a href="#priorities">3 · Ranked priorities</a>
+</nav>
+
+<section id="log">
+  <h2>Meeting log</h2>
+  <p class="lede">In date order. Wording follows the original minutes, with spelling tidied, so this section is the untouched record. Where a later meeting overrode an earlier one, the topic section below shows the earlier point struck through. Two source minutes carry date typos; the dates used here are explained under each.</p>
+
+  <article class="meeting">
+    <div class="mhead"><h3>Committee meeting</h3><span class="date">25 Sep 2026</span></div>
+    <p class="note">Minutes titled "YUKTI '27 Committee Meeting 25-09-2026". Outreach points refer to Manjula ma'am's guidance.</p>
+    <h4>Dates and planning</h4>
+    <ul>
+      <li>Team's proposed dates: 28, 29, 30 January, with justification to be given.</li>
+      <li>Dates, number of days and events are the team's decision.</li>
+      <li>Sequence: fix the dates, fix the events, make engaging reels, then bring in celebrities and influencers, so people have something to look forward to.</li>
+      <li>Get the brochure ready, tentatively 20 October.</li>
+    </ul>
+    <h4>Outreach and registration</h4>
+    <ul>
+      <li>Tap IIMs, NITs and other reputed colleges; do not focus much on lesser-known colleges.</li>
+      <li>Do not lower the registration fee; it may compromise the idea of quality.</li>
+      <li>Pull in various clubs and run events relevant to AI.</li>
+      <li>Keep cash prizes high; involve celebrities and influencers to attract registrations.</li>
+      <li>Outreach to follow Manjula ma'am's guidance.</li>
+    </ul>
+    <h4>Money</h4>
+    <ul>
+      <li>Last year the team started with ₹7 lakh; the current reserve is only ₹22,000.</li>
+      <li>Sponsorship expectation: ₹20 lakh.</li>
+      <li>Revenue generation is expected.</li>
+    </ul>
+    <h4>Logistics</h4>
+    <ul>
+      <li>Stalls discussed.</li>
+      <li>Tokens for lunch.</li>
+      <li>Accommodation: participants who opt out may stay outside; share details of nearby stays if needed.</li>
+    </ul>
+  </article>
+
+  <article class="meeting">
+    <div class="mhead"><h3>CCM briefing on vision and events</h3><span class="date">02 Oct 2026</span></div>
+    <p class="note flag">The file header reads 02-10-2023. Treated as 02-10-2026 because the minutes refer to YUKTI '27 and 2026 deadlines.</p>
+    <h4>Purpose</h4>
+    <ul><li>Share the vision and expectations with all club and cell coordinators (CCMs) and get well-structured, standardised event proposals from each club and cell by 15.10.2026.</li></ul>
+    <h4>Vision</h4>
+    <ul>
+      <li>Value-driven experiences: attractive prize money and sessions with thought leaders.</li>
+      <li>Management events: draw participation from leading Tier 1 and Tier 2 B-schools in major cities.</li>
+      <li>Cultural events: draw participation from Tier 3 colleges to broaden outreach and inclusivity.</li>
+      <li>Keep competition rounds concise and engaging.</li>
+      <li>Invite prominent, relevant judges for individual events.</li>
+      <li>Secure event-specific sponsorships suited to each event.</li>
+    </ul>
+    <h4>Benchmarking and theme</h4>
+    <ul>
+      <li>Set event standards by studying management and cultural fests of Tier 1 B-schools.</li>
+      <li>Theme to be announced on 05.10.2026.</li>
+    </ul>
+    <h4>Event planning and coordination</h4>
+    <ul>
+      <li>CCMs asked for a full outreach plan and a clear rules and regulations guide for framing events.</li>
+      <li>Each event gets two senior CCMs and two junior CCMs.</li>
+      <li>A smooth communication channel between CCMs across clubs and cells is a key requirement.</li>
+    </ul>
+    <h4>Concerns raised by Symphonies</h4>
+    <ul>
+      <li>Availability of a good-quality sound system.</li>
+      <li>Attractive prize money to encourage participation.</li>
+      <li>Delivering a worthwhile, memorable experience.</li>
+      <li>Permission to extend activities until 12:00 a.m.</li>
+    </ul>
+    <h4>Accommodation, food and operations</h4>
+    <ul>
+      <li>Explore tie-ups with paying guest accommodations and residences near the college.</li>
+      <li>Let participants buy food coupons at registration and choose their food in advance.</li>
+      <li>Plan guest and judge coordination, hospitality and food, participant assembly areas, and seating before and after events.</li>
+    </ul>
+    <h4>Suggestions</h4>
+    <ul>
+      <li>Explore non-vegetarian food stalls outside campus, subject to institutional permission.</li>
+      <li>Make cultural events more attractive so management-event participants also join them.</li>
+    </ul>
+    <h4>Action points</h4>
+    <ul>
+      <li>All clubs and cells submit event lists by 15.10.2026.</li>
+      <li>Finalise and announce the theme on 05.10.2026.</li>
+      <li>Prepare an outreach plan and a participant rules and regulations guide.</li>
+      <li>Identify accommodation and food arrangements.</li>
+      <li>Plan sound, hospitality, seating and participant management.</li>
+      <li>Explore event-specific sponsorships and ways to improve engagement.</li>
+    </ul>
+  </article>
+
+  <article class="meeting">
+    <div class="mhead"><h3>Meeting with Janaki ma'am</h3><span class="date">05 Oct 2026</span></div>
+    <p class="note flag">The minutes are headed 05.09.2027. Treated as 05.10.2026 because they mention the 10 Oct event deadline and an October logo reveal.</p>
+    <h4>Decisions and instructions</h4>
+    <ul>
+      <li>Dates frozen: 28.01.2027 to 30.01.2027.</li>
+      <li>Finalise theme, logo, tagline, broader vision, objective and T-shirt colour.</li>
+      <li>All colours must be aligned.</li>
+      <li>Ticket colour is acceptable; strengthen the golden flavour and lighten the purple.</li>
+      <li>Sponsorship brochure (2–3 pages) ready by this weekend. Boumya and Jhanvi responsible; Brindha to proofread.</li>
+      <li>Events finalised by all CCMs by 10 Oct.</li>
+      <li>Events brochure ready by next weekend.</li>
+      <li>Start involving first years soon.</li>
+      <li>Limit the number of events; raise the event organising budget and prize amounts.</li>
+      <li>Start YUKTI '27 promotion on LinkedIn and social media.</li>
+      <li>Plan a logo reveal in October.</li>
+      <li>Structure the budget for physical certificates.</li>
+      <li>Combo plus food is acceptable only if the plan is structured.</li>
+      <li>Meet faculty one on one, individually.</li>
+      <li>Meet Rahul (Eagle Catering); Jeswin (operations) takes responsibility.</li>
+      <li>Book rooms and catering early.</li>
+    </ul>
+    <h4>Ground rules (PS)</h4>
+    <ul>
+      <li>Everyone attends meetings without excuses, arrives before her, and checks there are no IT issues.</li>
+      <li>Post an update in the group as soon as each task is done.</li>
+      <li>Keep the three faculty coordinators on CC.</li>
+      <li>Meeting rooms: the group floor tutorial room or seminar hall; give them to Xtreme Moves and Symphonies if they ask.</li>
+    </ul>
+  </article>
+
+  <article class="meeting">
+    <div class="mhead"><h3>Meeting with Manjula ma'am</h3><span class="date">07 Oct 2026</span></div>
+    <h4>Event design</h4>
+    <ul>
+      <li>Keep about 15 professional events, with a little something for everyone who comes.</li>
+      <li>Mix online and offline events, and mix every domain; pull in the Sports club.</li>
+      <li>Quality is based on the number of rounds, so keep many rounds.</li>
+      <li>Individual events (for example Best Manager): as many rounds as possible, stretched across all 3 days.</li>
+      <li>Team events pull revenue; keep spot registration open for them.</li>
+      <li>Have treasure hunt and simulation ideas; consider running them virtually.</li>
+      <li>Live LED scoreboard to keep up the excitement.</li>
+      <li>Culturals after 5 p.m.: 4 hours a day, 12 hours over 3 days.</li>
+    </ul>
+    <h4>People and roles</h4>
+    <ul>
+      <li>Every event has a faculty coordinator, lead coordinators (2nd year) and a co-coordinator (1st year).</li>
+      <li>Appoint a stage manager to keep stage and audience engaged; prepare a stage agenda; TSM students present at each event.</li>
+      <li>Keep event coordinators and the team in the loop; schedule frequent meetings.</li>
+      <li>Connect with alumni, including those over 10 years out, as jury. Grow from 36 jury members to about 100.</li>
+    </ul>
+    <h4>Budget</h4>
+    <ul>
+      <li>Think about reimbursements.</li>
+      <li>Draft a line budget first: stage ₹5L, management events ₹2.5L, entertainment ₹2.5L, cash rewards, travel reimbursement (other-state students, jury).</li>
+      <li>Fix the budget, then move to sponsorship.</li>
+    </ul>
+    <h4>Sponsorship</h4>
+    <ul>
+      <li>Tap PROs and CSR initiative heads.</li>
+      <li>Approach Muthoot Finance, Equitas, HDFC and TMB.</li>
+      <li>Tap SaaS, payment gateway, edtech and AI platform companies, anyone who wants to reach the student community.</li>
+      <li>Classify sponsors as overall, event-based and award-based.</li>
+      <li>Form separate teams for edtech, food and corporates.</li>
+      <li>Pitch to hospitals.</li>
+      <li>Brand TSM.</li>
+    </ul>
+    <h4>Celebrities and promotion</h4>
+    <ul>
+      <li>Names suggested: Aravindh Swamy, Sidd Ahmed, Madhavan, Vikram, Mithul Jai Shankar, Sasi Kumar, Shivaangi, Krish and Sangeetha, Rishikanth.</li>
+      <li>Look into FM advertisements.</li>
+      <li>Aim for YUKTI '27 to be bigger than the past three years.</li>
+    </ul>
+    <h4>Stalls, brochures, stay and timing</h4>
+    <ul>
+      <li>Many small stalls rather than one stall with many varieties; lac bangle and other trending stalls.</li>
+      <li>Two separate brochures, one for management and one for culturals.</li>
+      <li>Speak with the mandapams at Thiruparankundram about accommodation.</li>
+      <li>Plan to hold the next YUKTI in September or October.</li>
+    </ul>
+  </article>
+</section>
+
+<section id="themes">
+  <h2>Points by topic</h2>
+  <p class="lede">Every point from the four meetings, regrouped. The tag on each line shows which meeting it came from. Where meetings conflict, the latest meeting stands, and the overridden point is struck through.</p>
+
+  <div class="theme"><h3>Dates and timeline</h3><ul>
+    <li class="sup"><span class="tag">25 Sep</span><span class="t">Proposed 28–30 Jan; dates, days and events are the team's call.<em>Settled 5 Oct</em></span></li>
+    <li><span class="tag">05 Oct</span><span class="t">Dates frozen at 28–30 Jan 2027.</span></li>
+    <li><span class="tag">02 Oct</span><span class="t">Theme announcement 5 Oct.</span></li>
+    <li class="sup"><span class="tag">02 Oct</span><span class="t">Event lists due 15 Oct.<em>Now 10 Oct</em></span></li>
+    <li><span class="tag">05 Oct</span><span class="t">Events finalised by 10 Oct; sponsorship brochure this weekend; events brochure next weekend; logo reveal in October.</span></li>
+    <li class="sup"><span class="tag">25 Sep</span><span class="t">Brochure tentatively 20 Oct.<em>Now 17–18 Oct</em></span></li>
+    <li><span class="tag">07 Oct</span><span class="t">Next YUKTI to be held in September or October.</span></li>
+  </ul></div>
+
+  <div class="theme"><h3>Event design and format</h3><ul>
+    <li><span class="tag">07 Oct</span><span class="t">About 15 professional events; mix of online and offline; every domain covered, including sports.</span></li>
+    <li><span class="tag">05 Oct</span><span class="t">Limit the number of events.</span></li>
+    <li><span class="tag">07 Oct</span><span class="t">Many rounds signal quality; stretch individual events over 3 days; team events earn revenue, so keep spot registration open.</span></li>
+    <li class="sup"><span class="tag">02 Oct</span><span class="t">Keep competition rounds concise.<em>Now many rounds</em></span></li>
+    <li><span class="tag">02 Oct</span><span class="t">Standardised events; rules and regulations guide; benchmark against Tier 1 B-school fests.</span></li>
+    <li><span class="tag">07 Oct</span><span class="t">Treasure hunt and simulation ideas; live LED scoreboard.</span></li>
+    <li><span class="tag">25 Sep</span><span class="t">Involve clubs with events relevant to AI.</span></li>
+    <li><span class="tag">07 Oct</span><span class="t">Culturals after 5 p.m., 4 hours a day.</span></li>
+    <li class="sup"><span class="tag">02 Oct</span><span class="t">Symphonies asks to run until 12 a.m.<em>Now 5 p.m. onward</em></span></li>
+    <li><span class="tag">02 Oct</span><span class="t">Make culturals attractive to management-event participants.</span></li>
+  </ul></div>
+
+  <div class="theme"><h3>Outreach, registration and promotion</h3><ul>
+    <li><span class="tag">25 Sep</span><span class="t">Target IIMs, NITs and reputed colleges; keep the registration fee.</span></li>
+    <li><span class="tag">02 Oct</span><span class="t">Tier 1 and 2 B-schools for management events; Tier 3 for culturals; outreach plan needed.</span></li>
+    <li><span class="tag">07 Oct</span><span class="t">A little something for everyone; beat the past three years' numbers; brand TSM.</span></li>
+    <li><span class="tag">05 Oct</span><span class="t">Start LinkedIn and social media promotion; logo reveal in October.</span></li>
+    <li><span class="tag">25 Sep</span><span class="t">Engaging reels; celebrities and influencers to draw registrations.</span></li>
+    <li><span class="tag">07 Oct</span><span class="t">FM advertisements.</span></li>
+  </ul></div>
+
+  <div class="theme"><h3>Budget and finance</h3><ul>
+    <li><span class="tag">25 Sep</span><span class="t">Started with ₹7L last year; current reserve ₹22k; revenue generation expected.</span></li>
+    <li><span class="tag">25 Sep</span><span class="t">Keep cash prizes high.</span></li>
+    <li><span class="tag">05 Oct</span><span class="t">Raise event organising budget and prize amounts; structure the certificate budget.</span></li>
+    <li><span class="tag">07 Oct</span><span class="t">Line budget first: stage ₹5L, management ₹2.5L, entertainment ₹2.5L, cash rewards, travel reimbursement. Fix budget, then sponsorship. Plan for reimbursements.</span></li>
+  </ul></div>
+
+  <div class="theme"><h3>Sponsorship</h3><ul>
+    <li><span class="tag">25 Sep</span><span class="t">Target ₹20L.</span></li>
+    <li><span class="tag">02 Oct</span><span class="t">Event-specific sponsorships matched to each event.</span></li>
+    <li><span class="tag">05 Oct</span><span class="t">2–3 page sponsorship brochure by the weekend (Boumya, Jhanvi; Brindha proofreads).</span></li>
+    <li><span class="tag">07 Oct</span><span class="t">Targets: Muthoot Finance, Equitas, HDFC, TMB, SaaS, payment gateways, edtech, AI platforms, hospitals, via PROs and CSR heads.</span></li>
+    <li><span class="tag">07 Oct</span><span class="t">Tiers: overall, event-based, award-based. Separate teams for edtech, food and corporates.</span></li>
+  </ul></div>
+
+  <div class="theme"><h3>Judges, guests and celebrities</h3><ul>
+    <li><span class="tag">02 Oct</span><span class="t">Prominent, relevant judges; thought-leader sessions; guest and judge hospitality and food.</span></li>
+    <li><span class="tag">07 Oct</span><span class="t">Alumni (10+ years out) as jury; grow from 36 to about 100.</span></li>
+    <li><span class="tag">07 Oct</span><span class="t">Celebrity shortlist of nine names or pairs.</span></li>
+  </ul></div>
+
+  <div class="theme"><h3>Branding and design</h3><ul>
+    <li><span class="tag">05 Oct</span><span class="t">Finalise theme, logo, tagline, vision, objective, T-shirt colour; align all colours.</span></li>
+    <li><span class="tag">05 Oct</span><span class="t">Ticket: more gold, lighter purple.</span></li>
+    <li><span class="tag">07 Oct</span><span class="t">Two brochures, management and culturals, kept separate.</span></li>
+  </ul></div>
+
+  <div class="theme"><h3>Food, stay, stalls and venue</h3><ul>
+    <li><span class="tag">25 Sep</span><span class="t">Lunch tokens; opt-out participants stay outside; nearby stay details on request.</span></li>
+    <li><span class="tag">02 Oct</span><span class="t">PG and residence tie-ups; food coupons bought at registration.</span></li>
+    <li><span class="tag">05 Oct</span><span class="t">Combo plus food only with a structured plan; meet Rahul of Eagle Catering (Jeswin); book rooms and catering early.</span></li>
+    <li><span class="tag">07 Oct</span><span class="t">Approach the Thiruparankundram mandapams for accommodation.</span></li>
+    <li><span class="tag">25 Sep</span><span class="t">Stalls discussed.</span></li>
+    <li><span class="tag">07 Oct</span><span class="t">Many small stalls; lac bangle and trending stalls.</span></li>
+    <li><span class="tag">02 Oct</span><span class="t">Non-veg food stalls outside campus (needs permission); sound system; assembly areas; seating.</span></li>
+  </ul></div>
+
+  <div class="theme"><h3>Team, roles and working rules</h3><ul>
+    <li class="sup"><span class="tag">02 Oct</span><span class="t">Two senior and two junior CCMs per event.<em>Now 7 Oct structure</em></span></li>
+    <li><span class="tag">02 Oct</span><span class="t">Smooth communication channel across clubs and cells.</span></li>
+    <li><span class="tag">07 Oct</span><span class="t">Faculty coordinator, 2nd-year leads, 1st-year co-coordinator per event; stage manager and stage agenda; frequent meetings.</span></li>
+    <li><span class="tag">05 Oct</span><span class="t">Involve first years soon; faculty meetings one on one; CC the three faculty coordinators.</span></li>
+    <li><span class="tag">05 Oct</span><span class="t">Attend without excuses, arrive early, no IT issues; post updates on completion; share meeting rooms with Xtreme Moves and Symphonies.</span></li>
+  </ul></div>
+
+  <h3 id="gaps" style="padding-top:8px">Conflicts resolved</h3>
+  <p class="lede">Rule applied: the latest meeting stands.</p>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Topic</th><th>Earlier point</th><th>Stands (latest)</th></tr></thead>
+    <tbody>
+      <tr><td>Event list deadline</td><td>15 Oct (2 Oct)</td><td><b>10 Oct</b> (5 Oct)</td></tr>
+      <tr><td>Brochure timing</td><td>Around 20 Oct (25 Sep)</td><td><b>Sponsorship brochure by 10–11 Oct, events brochures by 17–18 Oct</b> (5 Oct), as two separate brochures for management and culturals (7 Oct)</td></tr>
+      <tr><td>Cultural hours</td><td>Run until 12 a.m. (2 Oct)</td><td><b>After 5 p.m., 4 hours a day, 12 hours over 3 days</b> (7 Oct). No midnight permission needed.</td></tr>
+      <tr><td>Round structure</td><td>Concise rounds (2 Oct)</td><td><b>Many rounds</b>, since quality is judged by rounds (7 Oct)</td></tr>
+      <tr><td>Event team per event</td><td>Two senior and two junior CCMs (2 Oct)</td><td><b>Faculty coordinator, lead coordinators (2nd year), co-coordinator (1st year)</b> (7 Oct)</td></tr>
+      <tr><td>Dates and event count</td><td>Team decides dates, days and events (25 Sep)</td><td><b>28–30 Jan frozen</b> (5 Oct); <b>about 15 professional events</b> (7 Oct)</td></tr>
+      <tr><td>Food arrangement</td><td>Lunch tokens (25 Sep); coupons at registration (2 Oct)</td><td><b>Combo plus food, only with a structured plan</b> (5 Oct)</td></tr>
+      <tr><td>Target colleges</td><td>IIMs, NITs and reputed colleges (25 Sep)</td><td><b>Tier 1 and 2 B-schools for management, Tier 3 for culturals</b> (2 Oct)</td></tr>
+    </tbody>
+  </table></div>
+  <h3 style="padding-top:8px">Still open</h3>
+  <div class="open">
+    <ul>
+      <li>Theme: due 5 Oct, but the 5 Oct minutes still list it as to-do. Announcement status is unknown.</li>
+      <li>Budget: the 7 Oct lines (stage ₹5L, management ₹2.5L, entertainment ₹2.5L) total ₹10L before cash rewards and travel. Reserve is ₹22k and the sponsorship target is ₹20L.</li>
+      <li>Culturals: no count of events has been set, only the 12-hour limit.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="priorities">
+  <h2>Ranked priorities</h2>
+  <p class="lede">Items for the "can be discussed" list, ordered by how much they block other work and how close the deadline is. Built on the latest decision for each topic. Today is 7 Oct 2026.</p>
+
+  <ol class="rank">
+    <li class="item">
+      <header><h3>Fix the line budget</h3><span class="pill p-now">Now</span></header>
+      <p>Sponsorship outreach, prize money, certificates, reimbursements and brochures all depend on it. Manjula ma'am asked for budget first, then sponsors. The ₹10L of named lines is set; cash rewards and travel reimbursement still have no figure, and only ₹22k is in reserve.</p>
+      <p class="q"><span class="k">To discuss</span><br>Amounts for cash rewards, travel reimbursement (other-state students, jury) and certificates, and who owns the draft.</p>
+      <div class="meta"><span>Raised: 25 Sep, 5 Oct, 7 Oct</span></div>
+    </li>
+    <li class="item">
+      <header><h3>Finalise the event list</h3><span class="pill p-now">Due 10 Oct</span></header>
+      <p>Events drive both brochures, sponsor pitches, promotion and room booking. Direction is set: about 15 professional events, a mix of online and offline, many rounds each, and every domain covered. The list itself is not yet built.</p>
+      <p class="q"><span class="k">To discuss</span><br>The final 15, a cap or count for culturals, and the faculty coordinator, 2nd-year leads and 1st-year co-coordinator for each event.</p>
+      <div class="meta"><span>Raised: 2 Oct, 5 Oct, 7 Oct</span></div>
+    </li>
+    <li class="item">
+      <header><h3>Confirm theme, logo, tagline and colours</h3><span class="pill p-now">Overdue</span></header>
+      <p>The theme was due 5 Oct and the minutes do not say it was announced. Brochures, T-shirts, reels and the October logo reveal all wait on it, and the ticket palette needs more gold and a lighter purple.</p>
+      <p class="q"><span class="k">To discuss</span><br>Announcement status, logo reveal date, T-shirt colour and the single palette everyone uses.</p>
+      <div class="meta"><span>Raised: 2 Oct, 5 Oct</span></div>
+    </li>
+    <li class="item">
+      <header><h3>Sponsorship brochure and sponsor targets</h3><span class="pill p-now">This weekend</span></header>
+      <p>A 2–3 page brochure is due by the 10–11 Oct weekend (Boumya and Jhanvi, Brindha proofreading). The 7 Oct meeting added a long target list and sponsor tiers that the brochure should reflect.</p>
+      <p class="q"><span class="k">To discuss</span><br>Which tiers (overall, event-based, award-based) go in the brochure, who runs edtech, food and corporate outreach, and who approaches the named banks, companies and hospitals.</p>
+      <div class="meta"><span>Raised: 25 Sep, 5 Oct, 7 Oct</span></div>
+    </li>
+    <li class="item">
+      <header><h3>Two event brochures: management and culturals</h3><span class="pill p-week">By 17–18 Oct</span></header>
+      <p>Due next weekend per the 5 Oct meeting, and now split into two brochures per 7 Oct. Needs the event list and final design first.</p>
+      <p class="q"><span class="k">To discuss</span><br>Who writes and designs each brochure, and whether both can hold the 17–18 Oct date.</p>
+      <div class="meta"><span>Raised: 5 Oct, 7 Oct</span></div>
+    </li>
+    <li class="item">
+      <header><h3>Book rooms, catering and plan the food offer</h3><span class="pill p-week">This week</span></header>
+      <p>Both ma'ams stressed booking early. Jeswin owns the meeting with Rahul (Eagle Catering). Combo plus food is approved only if the plan is structured, so the structure has to be built.</p>
+      <p class="q"><span class="k">To discuss</span><br>The combo and food options and pricing, how coupons or tokens are sold at registration, the Eagle Catering meeting date, and the rooms to hold.</p>
+      <div class="meta"><span>Raised: 25 Sep, 2 Oct, 5 Oct</span></div>
+    </li>
+    <li class="item">
+      <header><h3>Start promotion: LinkedIn, reels, logo reveal</h3><span class="pill p-week">This month</span></header>
+      <p>Dates are frozen, so promotion can begin. Reels depend on the events and theme, so this follows items 2 and 3.</p>
+      <p class="q"><span class="k">To discuss</span><br>Content owner, posting calendar, and whether FM ads fit the budget.</p>
+      <div class="meta"><span>Raised: 25 Sep, 5 Oct, 7 Oct</span></div>
+    </li>
+    <li class="item">
+      <header><h3>Jury, alumni and celebrity outreach</h3><span class="pill p-week">By 20 Oct</span></header>
+      <p>Jury must grow from 36 to about 100, and celebrity commitments need lead time. Fees and jury travel depend on the budget.</p>
+      <p class="q"><span class="k">To discuss</span><br>Who contacts alumni and who contacts celebrities, and a priority order for the shortlist.</p>
+      <div class="meta"><span>Raised: 2 Oct, 7 Oct</span></div>
+    </li>
+    <li class="item">
+      <header><h3>Accommodation for outstation participants</h3><span class="pill p-soon">Soon</span></header>
+      <p>The latest direction is to speak with the Thiruparankundram mandapams. PG tie-ups and letting participants stay outside also remain on the table.</p>
+      <p class="q"><span class="k">To discuss</span><br>Who visits the mandapams and PGs, and what details go on the registration page.</p>
+      <div class="meta"><span>Raised: 25 Sep, 2 Oct, 7 Oct</span></div>
+    </li>
+    <li class="item">
+      <header><h3>Faculty meetings and first-year involvement</h3><span class="pill p-soon">Soon</span></header>
+      <p>Faculty meetings are to be held one on one, with the three faculty coordinators on CC. First years need to be brought in to serve as co-coordinators.</p>
+      <p class="q"><span class="k">To discuss</span><br>Schedule for the one-on-one faculty meetings and the first-year onboarding plan.</p>
+      <div class="meta"><span>Raised: 5 Oct, 7 Oct</span></div>
+    </li>
+    <li class="item">
+      <header><h3>Stage, sound, stalls and on-day experience</h3><span class="pill p-soon">Soon</span></header>
+      <p>Stage manager and stage agenda, a good sound system for the 5 p.m. onward cultural slots, live LED scoreboard, many small stalls and non-veg stalls outside campus. These follow once budget and schedule are fixed.</p>
+      <p class="q"><span class="k">To discuss</span><br>Stage manager appointment, sound system source and cost, stall categories, and who handles stall permissions.</p>
+      <div class="meta"><span>Raised: 25 Sep, 2 Oct, 7 Oct</span></div>
+    </li>
+  </ol>
+</section>
+</div>
+
+</body></html>
